@@ -3,12 +3,13 @@ package com.coronagoaway;
 public class CoronaDesinfector {
 
     private Announcer announcer = new AnnouncerMessage();
+    private Policeman policeman = new PolicemanImpl();
 
     public void Start(Room room){
 //        todo сообщить всем присутствующим в комнате, что о начале дезинфекции, и попросить всех свалить
         announcer.announce("Начинаем дезинфекцию, все вон!");
 //        todo разогнать всех кто не вышел после объявления
-        policeman.makePeopleLeaveRoom(room);
+        policeman.makePeopleLeaveRoom();
         desinfect(room);
 //        todo сообщить всем присутствующим в комнате, что они могут вернуться обратно
         announcer.announce("Рискните зайти обратно");

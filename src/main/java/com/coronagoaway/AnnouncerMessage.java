@@ -2,7 +2,7 @@ package com.coronagoaway;
 
 public class AnnouncerMessage implements Announcer {
     @Override
-    public void Announce(String message) {
+    public void announce(String message) {
         System.out.println(message);
     }
 }
