@@ -10,9 +10,9 @@ public class ObjectFactory {
     private ObjectFactory(){};
     
     // our code 
-    public <T> T createObject(Class<T> type){
-        Class<? extends T> classImpl = config.getInstance(type);
-        return null;
+    public <T> T createObject(Class<T> ifc){
+        Class<? extends T> classImpl = config.getInstance(ifc);
+        return (T) classImpl;
     }
 }
 
