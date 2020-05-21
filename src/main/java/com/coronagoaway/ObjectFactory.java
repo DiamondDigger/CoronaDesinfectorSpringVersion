@@ -1,18 +1,24 @@
 package com.coronagoaway;
 
+import lombok.SneakyThrows;
+
 public class ObjectFactory {
     // Singleton
     private static ObjectFactory ourInstance = new ObjectFactory();
-    private Config config;
+    private Config config = new JavaConfig("com.coronagoaway");
 
     public static ObjectFactory getInstance(){ return ourInstance; }
     
     private ObjectFactory(){};
     
-    // our code 
-    public <T> T createObject(Class<T> ifc){
-        Class<? extends T> classImpl = config.getInstance(ifc);
-        return (T) classImpl;
+    // our code
+    @SneakyThrows
+    public <T> T createObject(Class<T> type) {
+        Class<? extends T> impClass = type;
+        if (type.isInterface()) {
+            impClass = config.getInstance(type);
+        }
+        return impClass.getDeclaredConstructor().newInstance();
     }
 }
 
