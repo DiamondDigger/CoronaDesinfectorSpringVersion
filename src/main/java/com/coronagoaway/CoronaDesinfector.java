@@ -2,10 +2,10 @@ package com.coronagoaway;
 
 public class CoronaDesinfector {
 
-    private Announcer announcer = new AnnouncerMessage();
+    private Announcer announcer = new ConsoleAnnouncer();
     private Policeman policeman = new PolicemanImpl();
 
-    public void Start(Room room){
+    public void start(Room room){
 //        todo сообщить всем присутствующим в комнате, что о начале дезинфекции, и попросить всех свалить
         announcer.announce("Начинаем дезинфекцию, все вон!");
 //        todo разогнать всех кто не вышел после объявления
