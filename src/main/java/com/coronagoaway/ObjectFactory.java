@@ -5,12 +5,11 @@ import lombok.SneakyThrows;
 public class ObjectFactory {
     // Singleton
     private static ObjectFactory ourInstance = new ObjectFactory();
+    public static ObjectFactory getInstance(){ return ourInstance; }
+    private ObjectFactory(){};
+
     private Config config = new JavaConfig("com.coronagoaway");
 
-    public static ObjectFactory getInstance(){ return ourInstance; }
-    
-    private ObjectFactory(){};
-    
     // our code
     @SneakyThrows
     public <T> T createObject(Class<T> type) {
