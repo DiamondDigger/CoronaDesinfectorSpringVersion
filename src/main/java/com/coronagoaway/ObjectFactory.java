@@ -17,7 +17,10 @@ public class ObjectFactory {
         if (type.isInterface()) {
             impClass = config.getInstance(type);
         }
-        return impClass.getDeclaredConstructor().newInstance();
+        T t = impClass.getDeclaredConstructor().newInstance();
+
+
+        return t;
     }
 }
 
