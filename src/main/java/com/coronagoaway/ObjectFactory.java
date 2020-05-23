@@ -8,7 +8,6 @@ import java.util.Map;
 public class ObjectFactory {
 
     private Config config;
-    private Map<Class, Class> map;
 
     // Singleton
     private static ObjectFactory ourInstance = new ObjectFactory();
@@ -21,20 +20,15 @@ public class ObjectFactory {
         config = new JavaConfig("com.coronagoaway", new HashMap<>(Map.of(Policeman.class, AlarmPoliceman.class)));
     }
 
-    ;
-
-
     // our code
     @SneakyThrows
     public <T> T createObject(Class<T> type) {
-        return map.compute(type, (() -> {
-            Class<? extends T> impClass = type;
-            if (type.isInterface()) {
-                impClass = config.getInstance(type);
-            }
-            T t = impClass.getDeclaredConstructor().newInstance();
-            return t
-        }));
+        Class<? extends T> impClass = type;
+        if (type.isInterface()) {
+            impClass = config.getInstance(type);
+        }
+        T t = impClass.getDeclaredConstructor().newInstance();
+        return t;
     }
 }
 
