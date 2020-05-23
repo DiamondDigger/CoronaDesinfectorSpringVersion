@@ -2,13 +2,14 @@ package com.coronagoaway;
 
 import org.reflections.Reflections;
 
+import java.util.Map;
 import java.util.Set;
 
 public class JavaConfig implements Config {
 
     private Reflections scanner;
 
-    public JavaConfig(String packageScan) {
+    public JavaConfig(String packageScan, Map<Class, Class> mapOfImpl) {
         this.scanner = new Reflections(packageScan);
     }
 
