@@ -17,7 +17,7 @@ public class ObjectFactory {
     }
 
     private ObjectFactory() {
-        config = new JavaConfig("com.coronagoaway", new HashMap<>(Map.of(Policeman.class, AlarmPoliceman.class)));
+        config = new JavaConfig("com.coronagoaway", new HashMap<>(Map.of(Policeman.class, AngryPoliceman.class)));
     }
 
     // our code
