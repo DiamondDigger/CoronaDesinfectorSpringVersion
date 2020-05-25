@@ -2,10 +2,13 @@ package com.coronagoaway;
 
 import lombok.SneakyThrows;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class ObjectFactory {
 
@@ -36,7 +39,8 @@ public class ObjectFactory {
             InjectedProperty annotation = field.getAnnotation(InjectedProperty.class);
             if (annotation!=null) {
                 if (annotation.value().isEmpty()) {
-
+                    String path = ClassLoader.getSystemClassLoader().getResource("recommendation.properties").getPath();
+                    Stream<String> lines = new BufferedReader(new FileReader(path)).lines();
                 }
             }
         }
