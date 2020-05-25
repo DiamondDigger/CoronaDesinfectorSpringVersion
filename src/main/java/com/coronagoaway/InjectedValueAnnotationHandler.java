@@ -13,4 +13,9 @@ public class InjectedValueAnnotationHandler implements InjectedValue {
         InjectedValueAnnotationHandler annotationHandler = new InjectedValueAnnotationHandler();
         annotationHandler.annotationType();
     }
+
+    @Override
+    public String value() {
+        return null;
+    }
 }

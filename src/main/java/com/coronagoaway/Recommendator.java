@@ -1,5 +1,5 @@
 package com.coronagoaway;
 
-public interface Recommemndator {
+public interface Recommendator {
     void recommend();
 }

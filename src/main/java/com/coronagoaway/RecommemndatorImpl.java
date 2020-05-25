@@ -1,6 +1,6 @@
 package com.coronagoaway;
 
-public class RecommemndatorImpl implements Recommemndator {
+public class RecommemndatorImpl implements Recommendator {
     @InjectedValue
     private String alcohol;
 
