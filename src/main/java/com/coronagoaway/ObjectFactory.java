@@ -2,6 +2,8 @@ package com.coronagoaway;
 
 import lombok.SneakyThrows;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +30,18 @@ public class ObjectFactory {
             impClass = config.getInstance(type);
         }
         T t = impClass.getDeclaredConstructor().newInstance();
+
+        Field[] fields = impClass.getDeclaredFields();
+        for (Field field : fields) {
+            InjectedProperty annotation = field.getAnnotation(InjectedProperty.class);
+            if (annotation!=null) {
+                if (annotation.value().isEmpty()) {
+
+                }
+            }
+        }
+
+
         return t;
     }
 }

@@ -16,6 +16,5 @@ public class InjectedValueAnnotationHandler implements InjectedValue {
 
     @Override
     public String value() {
-        return null;
     }
 }
