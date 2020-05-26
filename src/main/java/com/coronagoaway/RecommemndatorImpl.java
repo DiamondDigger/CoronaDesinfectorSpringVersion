@@ -6,6 +6,6 @@ public class RecommemndatorImpl implements Recommendator {
 
     @Override
     public void recommend() {
-        System.out.println("to protect from covid-19  drink "+alcohol);
+        System.out.println("to protect from covid-19  drink " + alcohol);
     }
 }
