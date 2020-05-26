@@ -38,7 +38,7 @@ public class ObjectFactory {
         Field[] fields = impClass.getDeclaredFields();
         for (Field field : fields) {
             InjectedProperty annotation = field.getAnnotation(InjectedProperty.class);
-            if (annotation!=null) {
+            if (annotation != null) {
                 if (annotation.value().isEmpty()) {
                     String path = ClassLoader.getSystemClassLoader().getResource("recommendation.properties").getPath();
                     Stream<String> lines = new BufferedReader(new FileReader(path)).lines();
@@ -47,7 +47,8 @@ public class ObjectFactory {
                     field.setAccessible(true);
                     field.set(t, value);
                 } else {
-                    annotation. value();
+                    field.setAccessible(true);
+                    field.set(t,annotation.value());
                 }
             }
         }

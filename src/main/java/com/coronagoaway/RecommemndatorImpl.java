@@ -1,11 +1,11 @@
 package com.coronagoaway;
 
 public class RecommemndatorImpl implements Recommendator {
-    @InjectedProperty
+    @InjectedProperty("Jim Bean")
     private String alcohol;
 
     @Override
     public void recommend() {
-        System.out.println("to protect from covid-19  drink " + alcohol);
+        System.out.println("to protect from covid-19 drink " + alcohol);
     }
 }
