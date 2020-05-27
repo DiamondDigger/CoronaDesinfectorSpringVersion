@@ -1,18 +1,18 @@
 package com.coronagoaway;
 
+import lombok.Getter;
 import lombok.SneakyThrows;
+import org.reflections.Reflections;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ObjectFactory {
 
     private Config config;
+    private List<ObjectConfigurator> configurators = new ArrayList<>();
 
     // Singleton
     private static ObjectFactory ourInstance = new ObjectFactory();
@@ -21,8 +21,12 @@ public class ObjectFactory {
         return ourInstance;
     }
 
+    @SneakyThrows
     private ObjectFactory() {
         config = new JavaConfig("com.coronagoaway", new HashMap<>(Map.of(Policeman.class, AngryPoliceman.class)));
+        for (Class<? extends ObjectConfigurator> aClass : config.getScanner().getSubTypesOf(ObjectConfigurator.class)) {
+            configurators.add(aClass.getDeclaredConstructor().newInstance());
+        }
     }
 
     // our code
@@ -33,7 +37,9 @@ public class ObjectFactory {
             impClass = config.getInstance(type);
         }
         T t = impClass.getDeclaredConstructor().newInstance();
-
+        for (ObjectConfigurator configurator : configurators) {
+            configurator.confogure(t);
+        }
         return t;
     }
 }
