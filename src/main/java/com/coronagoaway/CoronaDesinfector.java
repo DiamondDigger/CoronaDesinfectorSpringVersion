@@ -6,9 +6,9 @@ package com.coronagoaway;
 
 public class CoronaDesinfector {
     @InjectByType
-    private Announcer announcer = ObjectFactory.getInstance().createObject(Announcer.class);
+    private Announcer announcer;
     @InjectByType
-    private Policeman policeman = ObjectFactory.getInstance().createObject(Policeman.class);
+    private Policeman policeman;
 
     public void start(Room room){
         announcer.announce("Начинаем дезинфекцию, все вон!");
