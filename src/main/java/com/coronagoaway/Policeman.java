@@ -1,8 +1,8 @@
 package com.coronagoaway;
 public interface Policeman {
-    @InjectValue
+    @InjectProperty
     public static final String name = "";
-    @InjectValue
+    @InjectProperty
     public static final String status = "";
 
     void makePeopleLeaveRoom();

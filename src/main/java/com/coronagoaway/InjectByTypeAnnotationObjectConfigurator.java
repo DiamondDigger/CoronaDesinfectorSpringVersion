@@ -4,7 +4,7 @@ import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
 
-public class InjectByPropertyAnnotationObjectConfigurator implements ObjectConfigurator {
+public class InjectByTypeAnnotationObjectConfigurator implements ObjectConfigurator {
     @Override
     @SneakyThrows
     public void configure(Object t) {

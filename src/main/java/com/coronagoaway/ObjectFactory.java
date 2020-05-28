@@ -32,7 +32,7 @@ public class ObjectFactory {
     public <T> T createObject(Class<T> type) {
         Class<? extends T> impClass = type;
         if (type.isInterface()) {
-            impClass = config.getInstance(type);
+            impClass = config.getImplClass(type);
         }
         T t = impClass.getDeclaredConstructor().newInstance();
         for (ObjectConfigurator configurator : configurators) {
