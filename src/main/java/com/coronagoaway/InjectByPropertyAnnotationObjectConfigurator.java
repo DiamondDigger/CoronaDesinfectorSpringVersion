@@ -1,15 +1,18 @@
 package com.coronagoaway;
 
-import java.lang.reflect.AnnotatedType;
+import lombok.SneakyThrows;
+
 import java.lang.reflect.Field;
 
 public class InjectByPropertyAnnotationObjectConfigurator implements ObjectConfigurator {
     @Override
-    public void confogure(Object t) {
+    @SneakyThrows
+    public void configure(Object t) {
         for (Field field : t.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(InjectByType.class)) {
-                AnnotatedType type = field.getAnnotatedType();
-                ObjectFactory.getInstance().createObject()
+                Object object = ObjectFactory.getInstance().createObject(field.getType());
+                field.setAccessible(true);
+                field.set(t, object);
             }
         }
     }

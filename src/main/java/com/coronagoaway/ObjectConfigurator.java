@@ -1,5 +1,5 @@
 package com.coronagoaway;
 
 public interface ObjectConfigurator {
-    void confogure(Object t);
+    void configure(Object t);
 }

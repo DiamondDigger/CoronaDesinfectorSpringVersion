@@ -21,7 +21,7 @@ public class InjectPropertyAnnotationObjectConfiguratorImpl implements ObjectCon
 
     @Override
     @SneakyThrows
-    public void confogure(Object t) {
+    public void configure(Object t) {
         Class<?> impClass = t.getClass();
         Field[] fields = impClass.getDeclaredFields();
         for (Field field : fields) {

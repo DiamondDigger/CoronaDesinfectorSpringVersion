@@ -36,7 +36,7 @@ public class ObjectFactory {
         }
         T t = impClass.getDeclaredConstructor().newInstance();
         for (ObjectConfigurator configurator : configurators) {
-            configurator.confogure(t);
+            configurator.configure(t);
         }
         return t;
     }
