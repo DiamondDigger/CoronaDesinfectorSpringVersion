@@ -1,7 +1,8 @@
 package com.coronagoaway;
 
+@Singleton
 public class RecommemndatorImpl implements Recommendator {
-    @InjectProperty()
+    @InjectProperty("tea")
     private String alcohol;
 
     @Override

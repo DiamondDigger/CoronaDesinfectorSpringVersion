@@ -19,7 +19,7 @@ public class JavaConfig implements Config {
 
     @Override
     public <T> Class<? extends T> getInstance(Class<T> ifc) {
-        //compileIfAbsent works from the Java 9 - returns value depends on a key, if could'nt find any match
+        //compileIfAbsent works from the Java 9 - returns value depends on a key, if couldn't find any matching
         //execute the next lambda
        return ifc2ImplClass.computeIfAbsent(ifc,aClass -> {
             Set<Class<? extends T>> classes = scanner.getSubTypesOf(ifc);
