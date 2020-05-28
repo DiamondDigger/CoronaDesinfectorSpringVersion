@@ -1,7 +1,7 @@
 package com.coronagoaway;
 
 public class RecommemndatorImpl implements Recommendator {
-    @InjectProperty("tea")
+    @InjectProperty()
     private String alcohol;
 
     @Override
