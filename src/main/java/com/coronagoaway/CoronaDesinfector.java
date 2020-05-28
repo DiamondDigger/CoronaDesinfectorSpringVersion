@@ -5,8 +5,9 @@ package com.coronagoaway;
 //        todo сообщить всем присутствующим в комнате, что они могут вернуться обратно
 
 public class CoronaDesinfector {
-
+    @InjectByType
     private Announcer announcer = ObjectFactory.getInstance().createObject(Announcer.class);
+    @InjectByType
     private Policeman policeman = ObjectFactory.getInstance().createObject(Policeman.class);
 
     public void start(Room room){
