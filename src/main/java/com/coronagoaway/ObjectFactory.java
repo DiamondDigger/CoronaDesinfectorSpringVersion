@@ -20,8 +20,9 @@ public class ObjectFactory {
     }
 
     @SneakyThrows
-    private ObjectFactory() {
-        config = new JavaConfig("com.coronagoaway", new HashMap<>(Map.of(Policeman.class, AngryPoliceman.class)));
+    private ObjectFactory(ApplicationContext context) {
+
+//        config = new JavaConfig("com.coronagoaway", new HashMap<>(Map.of(Policeman.class, AngryPoliceman.class)));
         for (Class<? extends ObjectConfigurator> aClass : config.getScanner().getSubTypesOf(ObjectConfigurator.class)) {
             configurators.add(aClass.getDeclaredConstructor().newInstance());
         }
