@@ -6,7 +6,10 @@ public class Application {
     public ApplicationContext run(String packageScan, Map<Class, Class> ifc2ImplClass){
         JavaConfig config = new JavaConfig(packageScan,ifc2ImplClass);
         ApplicationContext context = new ApplicationContext(config);
+        ObjectFactory objectFactory = new ObjectFactory(context);
 
-        return contex;
+        context.setFactory(objectFactory);
+
+        return context;
     }
 }
