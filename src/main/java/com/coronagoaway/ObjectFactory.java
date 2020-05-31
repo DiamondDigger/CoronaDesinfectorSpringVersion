@@ -3,24 +3,17 @@ package com.coronagoaway;
 import lombok.SneakyThrows;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ObjectFactory {
 
+    private ApplicationContext context;
     private Config config;
     private List<ObjectConfigurator> configurators = new ArrayList<>();
 
-    // Singleton
-
-    public static ObjectFactory getInstance() {
-        return ourInstance;
-    }
-
     @SneakyThrows
     public ObjectFactory(ApplicationContext context) {
-
+        this.context = context;
 //        config = new JavaConfig("com.coronagoaway", new HashMap<>(Map.of(Policeman.class, AngryPoliceman.class)));
         for (Class<? extends ObjectConfigurator> aClass : context.getConfig().getScanner().getSubTypesOf(ObjectConfigurator.class)) {
             configurators.add(aClass.getDeclaredConstructor().newInstance());
@@ -33,7 +26,7 @@ public class ObjectFactory {
 
         T t = impClass.getDeclaredConstructor().newInstance();
         for (ObjectConfigurator configurator : configurators) {
-            configurator.configure(t);
+            configurator.configure(t, context);
         }
         return t;
     }
