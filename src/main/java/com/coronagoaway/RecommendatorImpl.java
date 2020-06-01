@@ -1,6 +1,7 @@
 package com.coronagoaway;
 
 @Singleton
+@Deprecated
 public class RecommendatorImpl implements Recommendator {
     @InjectProperty("tea")
     private String alcohol;
