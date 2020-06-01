@@ -37,13 +37,17 @@ public class ObjectFactory {
         invokeInit(impClass, t);
 
         if (impClass.isAnnotationPresent(Deprecated.class)) {
-           return (T) Proxy.newProxyInstance(impClass.getClassLoader(), impClass.getInterfaces(), new InvocationHandler() {
-                @Override
-                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            if (impClass.getInterfaces().length == 0) {
+
+            } else {
+                return (T) Proxy.newProxyInstance(impClass.getClassLoader(), impClass.getInterfaces(), new InvocationHandler() {
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                         System.out.println("******* Вы все уроды!! Что ж вы делаете, класс же @Deprecated");
-                       return method.invoke(t,args);
-                }
-            });
+                        return method.invoke(t,args);
+                    }
+                });
+            }
         }
 
         return t;
