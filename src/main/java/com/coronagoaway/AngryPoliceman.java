@@ -2,6 +2,7 @@ package com.coronagoaway;
 
 import javax.annotation.PostConstruct;
 
+@Deprecated
 public class AngryPoliceman implements Policeman {
     @InjectByType
     private Recommendator recommendator;
@@ -14,6 +15,9 @@ public class AngryPoliceman implements Policeman {
 
     @Override
     public void makePeopleLeaveRoom() {
+        System.out.println(
+                Policeman.status + "\n"+
+                        Policeman.name + ":");
         System.out.println("Все вон, буду стрелять..где мой пистолет, вы у меня получите!");
     }
 }

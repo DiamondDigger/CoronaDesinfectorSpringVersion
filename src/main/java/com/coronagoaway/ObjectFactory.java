@@ -3,8 +3,10 @@ package com.coronagoaway;
 import lombok.SneakyThrows;
 
 import javax.annotation.PostConstruct;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,27 @@ public class ObjectFactory {
 
         confiqure(t);
 
+        //часть конструктора - второй конструктор, вызываемый после того
+        // как отработает конструктор и просетятся поля, поэтому оставляем метод @PostConstruct в фабрике
         invokeInit(impClass, t);
+
+        Proxy.newProxyInstance(impClass.getClassLoader(), impClass.getInterfaces(), new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+
+
+
+
+                return t;
+            }
+        });
+
+
+
+
+
+
+
 
         return t;
     }
