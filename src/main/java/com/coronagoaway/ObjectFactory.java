@@ -1,6 +1,7 @@
 package com.coronagoaway;
 
 import lombok.SneakyThrows;
+import net.sf.cglib.proxy.Enhancer;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.InvocationHandler;
@@ -38,7 +39,13 @@ public class ObjectFactory {
 
         if (impClass.isAnnotationPresent(Deprecated.class)) {
             if (impClass.getInterfaces().length == 0) {
-
+                //via cglib - make proxy with inheritance from original object
+                Enhancer.create(impClass, new net.sf.cglib.proxy.InvocationHandler() {
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] objects) throws Throwable {
+                        return null;
+                    }
+                })
             } else {
                 return (T) Proxy.newProxyInstance(impClass.getClassLoader(), impClass.getInterfaces(), new InvocationHandler() {
                     @Override
