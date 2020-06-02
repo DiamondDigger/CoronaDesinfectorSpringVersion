@@ -1,13 +1,10 @@
 package com.coronagoaway;
 
 import lombok.SneakyThrows;
-import net.sf.cglib.proxy.Enhancer;
 
 import javax.annotation.PostConstruct;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +13,7 @@ public class ObjectFactory {
     private final ApplicationContext context;
     private Config config;
     private List<ObjectConfigurator> configurators = new ArrayList<>();
+    private List<ProxyConfigurator> proxyConfigurators = new ArrayList<>();
 
     @SneakyThrows
     public ObjectFactory(ApplicationContext context) {
@@ -23,44 +21,35 @@ public class ObjectFactory {
         for (Class<? extends ObjectConfigurator> aClass : context.getConfig().getScanner().getSubTypesOf(ObjectConfigurator.class)) {
             configurators.add(aClass.getDeclaredConstructor().newInstance());
         }
+        for (Class<? extends ProxyConfigurator> aClass : context.getConfig().getScanner().getSubTypesOf(ProxyConfigurator.class)) {
+            proxyConfigurators.add(aClass.getDeclaredConstructor().newInstance());
+        }
     }
 
     // our code
     @SneakyThrows
-    public <T> T createObject(Class<T> impClass) {
+    public <T> T createObject(Class<T> implClass) {
 
-        T t = create(impClass);
+        T t = create(implClass);
 
         confiqure(t);
 
         //часть конструктора - второй конструктор, вызываемый после того
         // как отработает конструктор и просетятся поля, поэтому оставляем метод @PostConstruct в фабрике
-        invokeInit(impClass, t);
+        invokeInit(implClass, t);
 
-        if (impClass.isAnnotationPresent(Deprecated.class)) {
-            if (impClass.getInterfaces().length == 0) {
-                //via cglib - make proxy with inheritance from original object
-                Enhancer.create(impClass, new net.sf.cglib.proxy.InvocationHandler() {
-                    @Override
-                    public Object invoke(Object proxy, Method method, Object[] objects) throws Throwable {
-                        return null;
-                    }
-                })
-            } else {
-                return (T) Proxy.newProxyInstance(impClass.getClassLoader(), impClass.getInterfaces(), new InvocationHandler() {
-                    @Override
-                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        System.out.println("******* Вы все уроды!! Что ж вы делаете, класс же @Deprecated");
-                        return method.invoke(t,args);
-                    }
-                });
-            }
-        }
+        t = wrapWithProxy(implClass, t);
 
         return t;
 
     }
 
+    private <T> T wrapWithProxy(Class<T> implClass, T t) {
+        for (ProxyConfigurator proxyConfigurator : proxyConfigurators) {
+            t = (T) proxyConfigurator.replaceWithProxyIfNeeded(t, implClass);
+        }
+        return t;
+    }
 
 
     private <T> void confiqure(T t) {
@@ -69,12 +58,12 @@ public class ObjectFactory {
         }
     }
 
-    private <T> T create(Class<T> impClass) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        return impClass.getDeclaredConstructor().newInstance();
+    private <T> T create(Class<T> implClass) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        return implClass.getDeclaredConstructor().newInstance();
     }
 
-    private <T> void invokeInit(Class<T> impClass, T t) throws IllegalAccessException, InvocationTargetException {
-        for (Method method : impClass.getMethods()) {
+    private <T> void invokeInit(Class<T> implClass, T t) throws IllegalAccessException, InvocationTargetException {
+        for (Method method : implClass.getMethods()) {
             if (method.isAnnotationPresent(PostConstruct.class)) {
                 method.invoke(t);
             }

@@ -1,5 +1,5 @@
 package com.coronagoaway;
 
 public interface ProxyConfigurator {
-    public <T> T getProxy(Class<T> type);
+    public Object replaceWithProxyIfNeeded(Object t, Class implClass);
 }
