@@ -7,6 +7,11 @@ public class AngryPoliceman implements Policeman {
     @InjectByType
     private Recommendator recommendator;
 
+    @InjectProperty("")
+    private String name;
+    @InjectProperty("")
+    private String status;
+
     @PostConstruct
     public void Init(){
         System.out.println(recommendator.getClass());
@@ -16,8 +21,8 @@ public class AngryPoliceman implements Policeman {
     @Override
     public void makePeopleLeaveRoom() {
         System.out.println(
-                Policeman.status + "\n"+
-                        Policeman.name + ":");
+                status + "\n"+
+                        name + ":");
         System.out.println("Все вон, буду стрелять..где мой пистолет, вы у меня получите!");
     }
 }
